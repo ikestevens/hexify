@@ -62,16 +62,16 @@ def hex_all_images(loop=True):
         pic_name = pic_name.split(".")[0]
         image_gif_path = r'hex_gifs/' + pic_name + '.gif'
         image_mp4_path = r'hex_gifs/' + pic_name + '.mp4'
-        if not os.path.exists(image_gif_path) and not os.path.exists(image_mp4_path): # check if the gif already created, if so, skip
+        if not os.path.exists(image_gif_path) or not os.path.exists(image_mp4_path): # check if the gif already created, if so, skip
             print("Hexifying " + pic_name + "...")
             image = Image.open(pic)
             IMAGE_X, IMAGE_Y = image.size
             print("Original pic: {} by {} pixels. ".format(image.size[0], image.size[1]))
 
             #resize if it's too big
-            while IMAGE_X > 1000 or IMAGE_Y > 1000:
-                IMAGE_X = IMAGE_X/2
-                IMAGE_Y = IMAGE_Y/2
+            while IMAGE_X > 700 or IMAGE_Y > 700:
+                IMAGE_X = IMAGE_X/1.5
+                IMAGE_Y = IMAGE_Y/1.5
                 x2, y2 = math.floor(IMAGE_X), math.floor(IMAGE_Y)
                 image = image.resize((x2,y2),Image.ANTIALIAS)
                 IMAGE_X, IMAGE_Y = image.size
