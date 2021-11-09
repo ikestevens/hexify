@@ -60,12 +60,13 @@ def hex_all_images(loop=True):
         #grab the pic name and stuff
         pic_name = pic.replace("pics_to_hex/", "")
         pic_name = pic_name.split(".")[0]
-        image_path = r'hex_gifs/' + pic_name + '.gif'
-        if not os.path.exists(image_path): # check if the gif already created, is so, skip
+        image_gif_path = r'hex_gifs/' + pic_name + '.gif'
+        image_mp4_path = r'hex_gifs/' + pic_name + '.mp4'
+        if not os.path.exists(image_gif_path) and not os.path.exists(image_mp4_path): # check if the gif already created, if so, skip
             print("Hexifying " + pic_name + "...")
             image = Image.open(pic)
             IMAGE_X, IMAGE_Y = image.size
-            print(image.size)
+            print("Original pic: {} by {} pixels. ".format(image.size[0], image.size[1]))
 
             #resize if it's too big
             while IMAGE_X > 1000 or IMAGE_Y > 1000:
@@ -74,18 +75,20 @@ def hex_all_images(loop=True):
                 x2, y2 = math.floor(IMAGE_X), math.floor(IMAGE_Y)
                 image = image.resize((x2,y2),Image.ANTIALIAS)
                 IMAGE_X, IMAGE_Y = image.size
-            print(image.size)
+            pixels_x = image.size[0]
+            pixels_y = image.size[1]
+            print("Working size: {} by {} pixels. ".format(image.size[0], image.size[1]))
 
             #create hex images and append to gif list
             gif = []
             SIZE = 50
-            pixels = SIZE - 1s
+            pixels = SIZE - 3
             for i in range(pixels): # going down
                 hex_image = hexify(image, IMAGE_X, IMAGE_Y, SIZE)
                 gif.append(hex_image)
                 SIZE = SIZE - 1
 
-            for i in range(5): # the actual image
+            for i in range(10): # the actual image
                 gif.append(image)
 
             if loop:
@@ -98,6 +101,19 @@ def hex_all_images(loop=True):
             #save the gif
             print("making the gif...")
             gif[0].save('hex_gifs/' + pic_name + '.gif', save_all=True, duration=100, optimize=False, append_images=gif[1:], loop=0)
+
+            #also save it as a video
+            print("making the video...")
+            images = []#list of cv2 image obj
+            for image in gif:
+                #convert to cv2 image bc that can save as video
+                final_image = np.array(image)
+                final_image = cv2.cvtColor(final_image, cv2.COLOR_BGR2RGB)
+                images.append(final_image)
+
+            video = cv2.VideoWriter(image_mp4_path, cv2.VideoWriter_fourcc(*'mp4v'), 12, (pixels_x,pixels_y))
+            for image in images:
+                video.write(image)
             print("done with " + pic_name)
 
         else:
@@ -105,4 +121,11 @@ def hex_all_images(loop=True):
 
 if __name__ == "__main__":
 
-    hex_all_images()
+    loop = input("Do you want the hex to loop? y/n: ")
+
+    if loop == 'y':
+        loop = True
+    else:
+        loop = False
+
+    hex_all_images(loop)
