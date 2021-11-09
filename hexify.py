@@ -57,16 +57,17 @@ def hex_all_images(loop=True):
 
     for pic in glob.glob("pics_to_hex/*"):
 
-        #create folder for image sequences
+        #grab the pic name and stuff
         pic_name = pic.replace("pics_to_hex/", "")
         pic_name = pic_name.split(".")[0]
         image_path = r'hex_gifs/' + pic_name + '.gif'
-        if not os.path.exists(image_path):
+        if not os.path.exists(image_path): # check if the gif already created, is so, skip
             print("Hexifying " + pic_name + "...")
             image = Image.open(pic)
             IMAGE_X, IMAGE_Y = image.size
             print(image.size)
 
+            #resize if it's too big
             while IMAGE_X > 1000 or IMAGE_Y > 1000:
                 IMAGE_X = IMAGE_X/2
                 IMAGE_Y = IMAGE_Y/2
@@ -75,10 +76,10 @@ def hex_all_images(loop=True):
                 IMAGE_X, IMAGE_Y = image.size
             print(image.size)
 
-            #create hex images and save them in hex_image_sequences
+            #create hex images and append to gif list
             gif = []
             SIZE = 50
-            pixels = SIZE - 1
+            pixels = SIZE - 1s
             for i in range(pixels): # going down
                 hex_image = hexify(image, IMAGE_X, IMAGE_Y, SIZE)
                 gif.append(hex_image)
