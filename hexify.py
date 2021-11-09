@@ -5,7 +5,7 @@ import cv2
 import glob
 import os
 
-def create_hexagon(image_size, hex_length, center_x, center_y):
+def create_hexagon(hex_length, center_x, center_y):
     point_a = (center_x + hex_length, center_y)
     point_b = (center_x + hex_length/2, center_y + math.sqrt(3)*hex_length/2)
     point_c = (center_x - hex_length/2, center_y + math.sqrt(3)*hex_length/2)
@@ -103,5 +103,5 @@ def hex_all_images(loop=True):
             continue
 
 if __name__ == "__main__":
-    
+
     hex_all_images()
