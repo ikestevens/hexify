@@ -82,7 +82,7 @@ def hex_all_images(loop=True):
             #create hex images and append to gif list
             gif = []
             SIZE = 50
-            pixels = SIZE - 3
+            pixels = SIZE - 2
             for i in range(pixels): # going down
                 hex_image = hexify(image, IMAGE_X, IMAGE_Y, SIZE)
                 gif.append(hex_image)
