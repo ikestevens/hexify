@@ -1,5 +1,5 @@
 # Hexify
-Program to hexify an image and make a little gif
+Program to hexify an image and make a little gif and video
 
 ## Steps
 
