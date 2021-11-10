@@ -38,7 +38,7 @@ def hexify(pil_image, IMAGE_X, IMAGE_Y, SIZE):
     while True:
         hexagon = create_hexagon(SIZE, MOVE_X, MOVE_Y)
         color = get_image_color(image, int(MOVE_X), int(MOVE_Y))
-        ImageDraw.Draw(img).polygon(hexagon, outline=10, fill=color)
+        ImageDraw.Draw(img).polygon(hexagon, fill=color)
         MOVE_Y += math.sqrt((SIZE ** 2) - ((SIZE / 2) ** 2)) * 2
         if MOVE_Y >= IMAGE_Y + SIZE:
             if odd:
@@ -82,7 +82,7 @@ def hex_all_images(loop=True):
             #create hex images and append to gif list
             gif = []
             SIZE = 50
-            pixels = SIZE - 2
+            pixels = SIZE - 1
             for i in range(pixels): # going down
                 hex_image = hexify(image, IMAGE_X, IMAGE_Y, SIZE)
                 gif.append(hex_image)
