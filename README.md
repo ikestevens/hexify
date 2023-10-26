@@ -11,3 +11,5 @@ Program to hexify an image and make a little gif and video
 2. Run 'python hexify.py'
 
 3. The hexified gif and 9 second mp4 vid will be in the 'hex_gifs' folder!
+
+![Hexified Image](./mushroom.gif)
